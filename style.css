@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: lightblue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+canvas {
+    width: 90%;
+    height: auto;
+    border: 1px solid black;
+    background-color: lightyellow;
+}
+
+#resetButton, #startButton {
+    margin-top: 20px;
+    padding: 15px 30px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#resetButton {
+    display: none;
+}
+
+#countdown {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 80px;
+    font-weight: bold;
+    display: none;
+}
