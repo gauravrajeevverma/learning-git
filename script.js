@@ -4,27 +4,34 @@ const resetButton = document.getElementById('resetButton');
 const startButton = document.getElementById('startButton');
 const countdownDisplay = document.getElementById('countdown');
 
+let isMobile = /Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(navigator.userAgent);
+
 let bird = {
     x: 50,
     y: 0,
     radius: 20,
     velocity: 0,
-    gravity: 0.36,
-    jump: -7.7
+    gravity: isMobile ? 0.36 : 0.6,
+    jump: isMobile ? -7.7 : -11
 };
 
 let pipes = [];
 let pipeWidth = 50;
 let pipeGap = 150;
-let pipeSpeed = 1.5;
+let pipeSpeed = isMobile ? 1.5 : 3;
 
 let score = 0;
 let gameOver = false;
 let gameStarted = false;
 
 function setCanvasSize() {
-    canvas.width = window.innerWidth * 0.9;
-    canvas.height = window.innerHeight * 0.8;
+    if (isMobile) {
+        canvas.width = window.innerWidth * 0.9;
+        canvas.height = window.innerHeight * 0.8;
+    } else {
+        canvas.width = 400;
+        canvas.height = 600;
+    }
     bird.y = canvas.height / 2;
     pipeGap = canvas.height * 0.25;
     pipeWidth = canvas.width * 0.1;
@@ -122,14 +129,21 @@ function update() {
     requestAnimationFrame(update);
 }
 
-canvas.addEventListener('touchstart', () => {
+canvas.addEventListener(isMobile ? 'touchstart' : 'click', () => {
     if (gameStarted && !gameOver) {
         bird.velocity = bird.jump;
     }
 });
 
 function resetGame() {
-    bird = {x: 50, y: canvas.height / 2, radius: bird.radius, velocity: 0, gravity: 0.36, jump: -7.7};
+    bird = {
+        x: 50,
+        y: canvas.height / 2,
+        radius: bird.radius,
+        velocity: 0,
+        gravity: isMobile ? 0.36 : 0.6,
+        jump: isMobile ? -7.7 : -11
+    };
     pipes = [];
     score = 0;
     gameOver = false;
